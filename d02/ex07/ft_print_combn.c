@@ -32,7 +32,7 @@ void	ft_find_next_comb(int *tab, int n)
 	i = 0;
 	while (i + 1 < n)
 	{
-		if (tab[i + 1] > 9)
+		if (tab[i + 1] > 9 - (n - i - 2))
 		{
 			if (tab[i] + 1 > 9)
 			{
