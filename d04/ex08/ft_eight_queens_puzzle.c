@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 int	is_available(int *board, int collumn, int row)
 {
 	int i;
