@@ -1,5 +1,4 @@
 #include <stdlib.h>
-#include <stdio.h>
 
 int     ft_paramslen(int argc, char **argv)
 {
