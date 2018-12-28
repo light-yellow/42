@@ -30,14 +30,15 @@ void	ft_print_hex_addr(unsigned int num)
 		ft_putnbr_hex(num);
 }
 
-void	ft_print_hex(unsigned char *str)
+void	ft_print_hex(unsigned char *str, unsigned int size,
+					unsigned int printed)
 {
 	unsigned int	i;
 
 	i = 0;
-	while (i < 16 && *str)
+	while (i < 16 && i + printed < size)
 	{
-		if (*(str + i) > 0 && *(str + i) < 16)
+		if (*(str + i) < 16)
 			ft_putchar('0');
 		ft_putnbr_hex((unsigned int)(*(str + i)));
 		i += 1;
@@ -54,14 +55,15 @@ void	ft_print_hex(unsigned char *str)
         }
 }
 
-void	ft_print_printable(unsigned char *str)
+void	ft_print_printable(unsigned char *str, unsigned int size,
+						unsigned int printed)
 {
 	unsigned int	i;
 	
 	i = 0;
-	while (i < 16)
+	while (i < 16 && i + printed < size)
 	{
-		if (str[i] < 32 || str[i] == 127)
+		if (str[i] < 32 || str[i] >= 127)
 			ft_putchar('.');
 		else
 			ft_putchar(str[i]);
@@ -71,28 +73,21 @@ void	ft_print_printable(unsigned char *str)
 
 void	*ft_print_memory(void *addr, unsigned int size)
 {
-	unsigned int	i;
+	unsigned int	printed;
 	unsigned char	*str;
 
-	i = 0;
+	printed = 0;
 	str = (unsigned char *)addr;
-	while (i < size)
+	while (printed < size)
 	{
-		ft_print_hex_addr(i * 16);
+		ft_print_hex_addr(printed);
 		ft_putchar(':');
 		ft_putchar(' ');
-		ft_print_hex(str + (i * 16));
+		ft_print_hex(str + printed, size, printed);
 		ft_putchar(' ');
-		ft_print_printable(str + (i * 16));
+		ft_print_printable(str + printed, size, printed);
 		ft_putchar('\n');
-		i += 1;
+		printed += 16;
 	}
 	return (addr);
-}
-
-int	main(void)
-{
-	void	*addddr = "Salut les aminches c'est cool show mem on fait de truc terrible\0\n\n\n\t\v\t\t\t\t\t\t\t\t\r";
-	ft_print_memory(addddr, 5);
-	return (0);
 }
